@@ -16,53 +16,74 @@ interface card {
     shape: string;
 }
 
-let deck: card[] = [];
+function createDeck(): card[] {
+    let deck: card[] = [];
+    
+    color.color.forEach(
+        (color) => {
+    
+            count.count.forEach(
+                (count) => {
+    
+                    material.material.forEach(
+                        (material) => {
+    
+                            shape.shape.forEach(
+                                (shape) => {
+    
+                                    deck.push({
+                                        color: color.name,
+                                        count: count.amount,
+                                        material: material.name,
+                                        shape: shape.name
+                                    });
+                                }
+                            );
+                        }
+                    );
+                }
+            );
+        }
+    );
 
-color.color.forEach(
-    (color) => {
+    return deck;
+}
 
-        count.count.forEach(
-            (count) => {
+function shuffle(deck: card[]): card[] {
+    let currentIndex: number = deck.length;
+    let temporary: card;
+    let randomIndex: number;
 
-                material.material.forEach(
-                    (material) => {
+    while(currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
 
-                        shape.shape.forEach(
-                            (shape) => {
-
-                                deck.push({
-                                    color: color.name,
-                                    count: count.amount,
-                                    material: material.name,
-                                    shape: shape.name
-                                });
-                            }
-                        );
-                    }
-                );
-            }
-        );
+        temporary = deck[currentIndex];
+        deck[currentIndex] = deck[randomIndex];
+        deck[randomIndex] = temporary;
     }
-);
 
+    return deck;
+}
+
+let deck: card[] = createDeck();
+let shuffled: card[] = shuffle(deck);
 let deckTest: card[] = [];
-deckTest.push(deck[0], deck[8], deck[19]);
-console.log(deckTest);
+deckTest.push(shuffled[0], shuffled[1], shuffled[2]);
 
-let colorMatch: boolean = false;
-let countMatch: boolean = false;
-let materialMatch: boolean = false;
-let shapeMatch: boolean = false;
+function matchCheck(selection: card[]): boolean {
+    let colorMatch: boolean = false;
+    let countMatch: boolean = false;
+    let materialMatch: boolean = false;
+    let shapeMatch: boolean = false;
+    
+    colorMatch    = (selection[0].color     === selection[1].color)    ? (selection[0].color    === selection[2].color)    ? true : false : (selection[0].color    !== selection[1].color)    ? (selection[0].color    !== selection[2].color)    ? (selection[1].color    !== selection[2].color)    ? true : false : false : false;
+    countMatch    = (selection[0].count     === selection[1].count)    ? (selection[0].count    === selection[2].count)    ? true : false : (selection[0].count    !== selection[1].count)    ? (selection[0].count    !== selection[2].count)    ? (selection[1].count    !== selection[2].count)    ? true : false : false : false;
+    materialMatch = (selection[0].material  === selection[1].material) ? (selection[0].material === selection[2].material) ? true : false : (selection[0].material !== selection[1].material) ? (selection[0].material !== selection[2].material) ? (selection[1].material !== selection[2].material) ? true : false : false : false;
+    shapeMatch    = (selection[0].shape     === selection[1].shape)    ? (selection[0].shape    === selection[2].shape)    ? true : false : (selection[0].shape    !== selection[1].shape)    ? (selection[0].shape    !== selection[2].shape)    ? (selection[1].shape    !== selection[2].shape)    ? true : false : false : false;
 
-colorMatch =
-    (deckTest[0].color === deckTest[1].color) ? (deckTest[0].color === deckTest[2].color) ? true : false : (deckTest[0].color !== deckTest[1].color) ? (deckTest[0].color !== deckTest[2].color) ? true : false : false;
-console.log(colorMatch);
+    return colorMatch && countMatch && materialMatch && shapeMatch;
+}
 
-countMatch = (deckTest[0].count === deckTest[1].count) ? (deckTest[0].count === deckTest[2].count) ? true : false : (deckTest[0].count !== deckTest[1].count) ? (deckTest[0].count !== deckTest[2].count) ? true : false : false;
-console.log(countMatch);
-
-materialMatch = (deckTest[0].material === deckTest[1].material) ? (deckTest[0].material === deckTest[2].material) ? true : false : (deckTest[0].material !== deckTest[1].material) ? (deckTest[0].material !== deckTest[2].material) ? true : false : false;
-console.log(materialMatch);
-
-shapeMatch = (deckTest[0].shape === deckTest[1].shape) ? (deckTest[0].shape === deckTest[2].shape) ? true : false : (deckTest[0].shape !== deckTest[1].shape) ? (deckTest[0].shape !== deckTest[2].shape) ? true : false : false;
-console.log(shapeMatch);
+let match: boolean = false;
+match = matchCheck(deckTest);
