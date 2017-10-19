@@ -49,7 +49,9 @@ function createDeck(): card[] {
     return deck;
 }
 
-function shuffle(deck: card[]): card[] {
+let deck: card[] = createDeck();
+
+function shuffleDeck(deck: card[]): card[] {
     let currentIndex: number = deck.length;
     let temporary: card;
     let randomIndex: number;
@@ -66,12 +68,9 @@ function shuffle(deck: card[]): card[] {
     return deck;
 }
 
-let deck: card[] = createDeck();
-let shuffled: card[] = shuffle(deck);
-let deckTest: card[] = [];
-deckTest.push(shuffled[0], shuffled[1], shuffled[2]);
+let shuffled: card[] = shuffleDeck(deck);
 
-function matchCheck(selection: card[]): boolean {
+function selectionMatchCheck(selection: card[]): boolean {
     let colorMatch: boolean = false;
     let countMatch: boolean = false;
     let materialMatch: boolean = false;
@@ -85,5 +84,40 @@ function matchCheck(selection: card[]): boolean {
     return colorMatch && countMatch && materialMatch && shapeMatch;
 }
 
-let match: boolean = false;
-match = matchCheck(deckTest);
+function setGameBoard(): card[] {
+    let gameBoard: card[] = [];
+    let gamei: number = 0;
+    let gamec: number = 12;
+
+    for( ; gamei < gamec; gamei++ ) {
+        gameBoard.push(shuffled[gamei]);
+    }
+
+    return gameBoard;
+}
+
+let gameBoard: card[] = setGameBoard();
+
+function gameBoardMatches(board: card[]): number {
+    let match: number = 0;
+    let mc: number = board.length;
+    
+    for (let mi0: number = 0; mi0 < mc; mi0++ ) {
+    
+        for (let mi1: number = mi0 + 1; mi1 < mc; mi1++) {
+    
+            for (let mi2: number = mi1 + 1; mi2 < mc; mi2++) {
+    
+                if (selectionMatchCheck([gameBoard[mi0], gameBoard[mi1], gameBoard[mi2]])) {
+                    match++
+                }
+    
+            }
+        }
+    }
+
+    return match;
+}
+
+let match: number = gameBoardMatches(gameBoard);
+console.log(match);
