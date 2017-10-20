@@ -1,3 +1,1 @@
-export class Card {
-    public constructor() { }
-}
+export class Card {}

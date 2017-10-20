@@ -3,21 +3,15 @@ import { Color } from './color';
 import { Count } from './count';
 import { Material } from './material';
 import { Shape } from './shape';
+import { iCard } from './iGame';
 
 let color: Color = new Color();
 let count: Count = new Count();
 let material: Material = new Material();
 let shape: Shape = new Shape();
 
-interface card {
-    color: string;
-    count: number;
-    material: string;
-    shape: string;
-}
-
-function createDeck(): card[] {
-    let deck: card[] = [];
+function createDeck(): iCard[] {
+    let deck: iCard[] = [];
     
     color.color.forEach(
         (color) => {
@@ -33,7 +27,7 @@ function createDeck(): card[] {
     
                                     deck.push({
                                         color: color.name,
-                                        count: count.amount,
+                                        count: count.name,
                                         material: material.name,
                                         shape: shape.name
                                     });
@@ -49,11 +43,11 @@ function createDeck(): card[] {
     return deck;
 }
 
-let deck: card[] = createDeck();
+let deck: iCard[] = createDeck();
 
-function shuffleDeck(deck: card[]): card[] {
+function shuffleDeck(deck: iCard[]): iCard[] {
     let currentIndex: number = deck.length;
-    let temporary: card;
+    let temporary: iCard;
     let randomIndex: number;
 
     while(currentIndex !== 0) {
@@ -68,9 +62,9 @@ function shuffleDeck(deck: card[]): card[] {
     return deck;
 }
 
-let shuffled: card[] = shuffleDeck(deck);
+let shuffled: iCard[] = shuffleDeck(deck);
 
-function selectionMatchCheck(selection: card[]): boolean {
+function selectionMatchCheck(selection: iCard[]): boolean {
     let colorMatch: boolean = false;
     let countMatch: boolean = false;
     let materialMatch: boolean = false;
@@ -84,8 +78,8 @@ function selectionMatchCheck(selection: card[]): boolean {
     return colorMatch && countMatch && materialMatch && shapeMatch;
 }
 
-function setGameBoard(): card[] {
-    let gameBoard: card[] = [];
+function setGameBoard(): iCard[] {
+    let gameBoard: iCard[] = [];
     let gamei: number = 0;
     let gamec: number = 12;
 
@@ -96,9 +90,9 @@ function setGameBoard(): card[] {
     return gameBoard;
 }
 
-let gameBoard: card[] = setGameBoard();
+let gameBoard: iCard[] = setGameBoard();
 
-function gameBoardMatches(board: card[]): number {
+function gameBoardMatches(board: iCard[]): number {
     let match: number = 0;
     let mc: number = board.length;
     

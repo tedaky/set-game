@@ -1,16 +1,19 @@
+import { Init } from './lifecycle';
 import { Card } from './card';
+import { iGame } from './iGame';
 
-export class Count extends Card {
-    public count: count[];
+export class Count extends Card implements Init {
+    public count: iGame[];
+    
     public constructor() {
         super();
+    }
+
+    public onInit(): void {
         this.count = [
-            { amount: 1 },
-            { amount: 2 },
-            { amount: 3 }
+            { name: '1' },
+            { name: '2' },
+            { name: '3' }
         ];
     }
-}
-interface count {
-    amount: number;
 }
